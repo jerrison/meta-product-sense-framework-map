@@ -22,7 +22,7 @@ if (els.render) {
   init().catch((error) => {
     console.error(error);
     els.render.innerHTML =
-      '<p class="artifact-error">The original artifact failed to render here. Use "Open in Claude" or view the source.</p>';
+      '<p class="artifact-error">The original artifact failed to render here. The extracted source is shown below.</p>';
     state.sourceVisible = true;
     syncSourcePanel();
   });

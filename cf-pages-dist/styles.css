@@ -401,11 +401,6 @@ textarea {
   outline: none;
 }
 
-.artifact-action--link {
-  background: linear-gradient(135deg, rgba(44, 92, 243, 0.14), rgba(239, 106, 91, 0.14));
-  border-color: rgba(44, 92, 243, 0.28);
-}
-
 .artifact-zoom {
   display: inline-flex;
   align-items: center;
