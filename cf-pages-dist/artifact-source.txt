@@ -1,0 +1,437 @@
+---
+title: Meta L6 Product Sense — Complete Framework
+---
+
+flowchart LR
+    classDef step fill:#2563eb,color:#fff,stroke:#1d4ed8,stroke-width:3px,font-weight:bold
+    classDef substep fill:#f0f4ff,color:#1e293b,stroke:#93b4f5,stroke-width:1px
+    classDef warning fill:#fef2f2,color:#dc2626,stroke:#dc2626,stroke-width:2px,font-weight:bold
+    classDef strong fill:#f0fdf4,color:#059669,stroke:#059669,stroke-width:2px
+    classDef decision fill:#fffbeb,color:#b45309,stroke:#b45309,stroke-width:2px
+    classDef say fill:#f0fdf4,color:#047857,stroke:#059669,stroke-width:1px
+    classDef dontsay fill:#fef2f2,color:#b91c1c,stroke:#dc2626,stroke-width:1px
+    classDef gen fill:#faf5ff,color:#6d28d9,stroke:#7c3aed,stroke-width:1px
+    classDef done fill:#dc2626,color:#fff,stroke:#991b1b,stroke-width:3px,font-weight:bold
+
+    %% ============================================
+    %% STEP 1 COLUMN
+    %% ============================================
+    subgraph COL1 [" "]
+        direction TB
+        S1["🔵 STEP 1: CLARIFY
+        ⏱ 2-3 min
+        ✅ Strong"]:::step
+        S1A["A: Identify ambiguities
+        (5 sec silent)
+        ──────────
+        Surface? Goal? Scope?"]:::substep
+        S1B["B: Ask 2-3 questions
+        (60-90 sec spoken)
+        ──────────
+        Q1 = GOAL (always first)
+        Q2 = SURFACE or SCOPE
+        Q3 = Strategic hypothesis"]:::substep
+        S1C["C: Use answers to pick
+        tension generator
+        (5 sec silent)"]:::substep
+        S1D["D: Transition
+        ──────────
+        💬 'Here's how I'd
+        frame this...'
+        🚫 Never ask permission"]:::substep
+        S1 --> S1A --> S1B --> S1C --> S1D
+    end
+
+    %% ============================================
+    %% STEP 2 COLUMN
+    %% ============================================
+    subgraph COL2 [" "]
+        direction TB
+        S2["🟣 STEP 2: REFRAME
+        ⏱ 1 min
+        ⚠️ Broke once"]:::step
+        S2FLOW["15-SEC DECISION FLOW
+        ════════════════
+        Sec 1-5: Behavior
+        on Meta? → G1
+        Sec 5-10: Surface
+        neglected? → G2
+        Sec 10-15: Attention
+        w/o intent? → G3
+        Fallback: → G5"]:::decision
+        G1["G1: BEHAVIOR EXISTS
+        ──────────
+        Structuring captures
+        value BUT risks killing
+        organic social behavior
+        ──────────
+        Pet Adopt, Home Repair"]:::gen
+        G2["G2: INVEST IMBALANCE
+        ──────────
+        Winner invested,
+        adjacent neglected
+        at massive scale
+        ──────────
+        IG Stories"]:::gen
+        G3["G3: ATTENTION W/O INTENT
+        ──────────
+        Meta has eyeballs,
+        treats generically
+        when context = value
+        ──────────
+        Sports, Airport"]:::gen
+        G45["G4: PASSIVE → ACTIVE
+        G5: ASSET UNUSED (fallback)
+        ──────────
+        Social graph, cross-app,
+        3.58B DAP underutilized"]:::gen
+        S2T["💬 TEMPLATE
+        'Fundamentally about
+        [TENSION]. Meta uniquely
+        positioned because [ASSET].
+        Stake is [WON/LOST].'
+        ──────────
+        🧪 Google test: works
+        for Google? → push harder"]:::say
+        S2 --> S2FLOW
+        S2FLOW --> G1
+        S2FLOW --> G2
+        S2FLOW --> G3
+        S2FLOW --> G45
+        G1 --> S2T
+        G2 --> S2T
+        G3 --> S2T
+        G45 --> S2T
+    end
+
+    %% ============================================
+    %% STEP 3 COLUMN
+    %% ============================================
+    subgraph COL3 [" "]
+        direction TB
+        S3["🟣 STEP 3: SEGMENT
+        ⏱ 4-5 min
+        ✅ Strong"]:::step
+        S3A["A: Choose lens (5 sec)
+        ──────────
+        Supply/demand? →
+        Identify sides first
+        No marketplace? →
+        Frequency or context"]:::substep
+        S3B["⚠️ B: SIDES first
+        THEN segment within
+        ──────────
+        Pick ONE side →
+        break into 3 behavioral
+        segments
+        ──────────
+        Pet adoption broke
+        here: named sides
+        AS segments"]:::warning
+        S3C["C: 3 segments by
+        BEHAVIOR (90 sec)
+        ════════════
+        5 LENSES:
+        1. Engagement mode
+        2. Frequency/depth
+        3. Lifecycle stage
+        4. Job-to-be-done
+        5. Context of use
+        ════════════
+        🚫 No demographics
+        🚫 No pain points"]:::substep
+        S3D["D: Pick — woven
+        argument (60 sec)
+        ════════════
+        1) Ecosystem leverage
+        2) Urgency
+        3) Addressability
+        4) Strategic alignment
+        ════════════
+        🚫 No scoring matrix"]:::decision
+        S3E["E: Connect to reframe
+        'This segment is at
+        the heart of the
+        tension because...'"]:::substep
+        S3 --> S3A --> S3B --> S3C --> S3D --> S3E
+    end
+
+    %% ============================================
+    %% STEP 4 COLUMN
+    %% ============================================
+    subgraph COL4 [" "]
+        direction TB
+        S4["🔵 STEP 4: PAIN POINTS
+        ⏱ 3-4 min
+        ✅ Strong"]:::step
+        S4A["A: Journey simulation
+        (10 sec silent)
+        ──────────
+        Discovery → Action
+        → Feedback → Repeat"]:::substep
+        S4B["B: Formula for each
+        (20 sec spoken each)
+        ════════════
+        [Person] tries to
+        [action] → but [what
+        goes wrong] → so
+        [consequence]
+        ════════════
+        Consequences:
+        Abandonment
+        Workaround
+        Emotional
+        Economic
+        Behavioral"]:::substep
+        S4C["C: Solution-in-disguise
+        test (instant check)
+        ──────────
+        'I struggle...' → ✅
+        'I wish I could...' → 🚫"]:::substep
+        S4D["D: Pick one (20 sec)
+        ──────────
+        Freq × Severity
+        × Specificity
+        + foreshadow
+        business value"]:::decision
+        S4 --> S4A --> S4B --> S4C --> S4D
+    end
+
+    %% ============================================
+    %% STEP 5 COLUMN
+    %% ============================================
+    subgraph COL5 [" "]
+        direction TB
+        S5["🟢 STEP 5: SOLUTIONS
+        ⏱ 8-10 min
+        ⚠️ Weakness area"]:::step
+        S5A["A: 3 levers (90 sec)
+        ──────────
+        L1: Help do it better
+        L2: Do it for them
+        L3: Eliminate problem
+        One sentence each"]:::substep
+        S5B["B: Pick & dismiss
+        strategically (60 sec)
+        ──────────
+        'doesn't scale...'
+        'cold start...'
+        'behavior change...'
+        🚫 'I like this more'"]:::decision
+        S5C["⚠️ C: WHY NOW?
+        SAY IMMEDIATELY
+        ════════════════
+        #1 WEAKNESS
+        Absent 5 of 6 mocks
+        ════════════════
+        3 triggers + dates:
+        1. TECH trigger
+        2. COMPETITIVE trigger
+        3. MARKET trigger
+        ──────────
+        🧪 True 2yr ago?
+        → Not a Why Now"]:::warning
+        S5D["⚠️ D: V1 UX walkthrough
+        (2-3 min spoken)
+        ──────────
+        Narrate screen-share:
+        WHERE → SEE →
+        TAP → RESULT
+        ──────────
+        Name actual screens,
+        buttons, flows
+        ⚠️ Thin in last mocks"]:::warning
+        S5E["E: V2 = depth (60 sec)
+        ──────────
+        'V1 teaches us [X].
+        V2 uses that for [Y].'
+        🚫 Different solution
+        = lever-jumping"]:::substep
+        S5F["⚠️ F: ECOSYSTEM TRACE
+        4 levels (90 sec)
+        ════════════════
+        L1: 'Direct impact...'
+        L2: 'Supply-side
+        behavior changes...'
+        L3: 'On ADVERTISER
+        side...' ← name
+        categories + WHY
+        CPMs increase
+        L4: 'Across FAMILY
+        OF APPS...' ← name
+        2-3 apps + mechanism
+        ════════════════
+        ⚠️ You stop at L2.
+        'On advertiser side'
+        = forcing function"]:::warning
+        S5G["✅ G: REVENUE BRIDGE
+        (20 sec spoken)
+        ════════════════
+        Feature → Behavior
+        → Metric → Revenue
+        → SIZE IT
+        ════════════════
+        🚫 'same CPM'
+        ✅ 'higher CPMs
+        because [intent]'
+        ──────────
+        Use 1+ number:
+        $50B · $60B · $201B"]:::strong
+        S5H["H: Assumptions (20 sec)
+        ──────────
+        1. ADOPTION
+        2. TECHNICAL
+        3. SCALE
+        'Riskiest is [X].
+        Validate by [method].'"]:::substep
+        S5 --> S5A --> S5B --> S5C --> S5D --> S5E --> S5F --> S5G --> S5H
+    end
+
+    %% ============================================
+    %% STEP 6 COLUMN
+    %% ============================================
+    subgraph COL6 [" "]
+        direction TB
+        S6["🟠 STEP 6: TRADEOFFS
+        ⏱ 3-4 min
+        Fixed in drills"]:::step
+        S6A["A: Run 4 types
+        (10 sec silent)
+        ════════════
+        1. USER vs USER
+        ⚠️ your blind spot
+        2. SHORT vs LONG
+        3. BUSINESS vs UX
+        4. PLATFORM vs
+        ECOSYSTEM
+        ════════════
+        Pick sharpest 1-2"]:::decision
+        S6B["B: Both sides (15 sec)
+        ──────────
+        'Tradeoff is [X]
+        versus [Y].'
+        Name gain AND loss"]:::substep
+        S6C["C: Pick a side (10 sec)
+        ──────────
+        'I'd choose [X].'
+        🚫 'it depends'
+        🚫 'ideally both'
+        🚫 'can't think
+        of a tradeoff'"]:::dontsay
+        S6D["D: Explain WHY (20 sec)
+        ──────────
+        'I accept [cost]
+        because [reason].'
+        ──────────
+        FALLBACK:
+        'Building this means
+        NOT building [alt].'"]:::substep
+        S6 --> S6A --> S6B --> S6C --> S6D
+    end
+
+    %% ============================================
+    %% STEP 7 COLUMN
+    %% ============================================
+    subgraph COL7 [" "]
+        direction TB
+        S7["🔴 STEP 7: METRICS
+        ⏱ 2-3 min
+        ⚠️ Critical weakness"]:::step
+        S7A["⚠️ A: North Star
+        (10 sec silent)
+        ════════════════
+        ASK: 'What was my
+        PAIN POINT?'
+        ──────────
+        NS = is THAT pain
+        point resolved?
+        NOT tool adoption
+        NOT volume
+        NOT reach/views"]:::warning
+        S7B["B: Two tests (silent)
+        ──────────
+        Terrible experience:
+        metric ↑ + miserable
+        = caught? NO → wrong
+        ──────────
+        Gaming: gamed w/o
+        value? YES → wrong"]:::substep
+        S7C["C: State with 'because'
+        (15 sec spoken)
+        ──────────
+        💬 'North Star is
+        [metric] because it
+        measures whether we
+        solved [pain point].'"]:::say
+        S7D["D: Full stack (35 sec)
+        ──────────
+        Leading: earlier in
+        journey, predicts NS
+        ──────────
+        Guardrail: what could
+        BREAK? (protection,
+        not engagement)
+        ──────────
+        Counter: what gets
+        WORSE + why accept"]:::substep
+        S7E["🚫 PAST MISTAKES
+        ════════════
+        'AI Stories created'
+        → Activity
+        'Listings created'
+        → Volume
+        'Views' → Reach
+        'Minutes' → Passive
+        ════════════
+        ACID TEST:
+        'If [NS] ↑, proves
+        [pain point] resolved
+        for [segment].'"]:::dontsay
+        S7 --> S7A --> S7B --> S7C --> S7D
+        S7D ~~~ S7E
+    end
+
+    %% ============================================
+    %% STEP 8 COLUMN
+    %% ============================================
+    subgraph COL8 [" "]
+        direction TB
+        S8["⭐ STEP 8: SUMMARY
+        ⏱ 5 min buffer"]:::step
+        S8A["A: 45-sec summary
+        7 beats, 1 sentence each
+        ════════════
+        1. Segment + why
+        2. Pain point
+        3. Solution
+        4. V1 headline
+        5. V2 headline
+        6. Tradeoff + position
+        7. North Star
+        ════════════
+        No new info = RECAP"]:::substep
+        S8B["B: Name biggest risk
+        (unprompted)
+        ──────────
+        'Biggest risk is [X].
+        Validate by [method].'"]:::substep
+        S8C["C: Ask strategic question
+        ──────────
+        ✅ 'How does team
+        think about [choice]?'
+        🚫 'How big is team?'"]:::substep
+        STOP["🔴 40 MIN
+        HARD STOP"]:::done
+        S8 --> S8A --> S8B --> S8C --> STOP
+    end
+
+    %% ============================================
+    %% HORIZONTAL CONNECTIONS (major steps only)
+    %% ============================================
+    S1 ==> S2
+    S2 ==> S3
+    S3 ==> S4
+    S4 ==> S5
+    S5 ==> S6
+    S6 ==> S7
+    S7 ==> S8

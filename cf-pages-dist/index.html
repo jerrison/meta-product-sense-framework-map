@@ -20,6 +20,7 @@
     />
     <link rel="stylesheet" href="./styles.css" />
     <script src="./app.js" defer></script>
+    <script type="module" src="./artifact-viewer.js"></script>
   </head>
   <body>
     <div class="app-shell">
@@ -90,6 +91,55 @@
         <div class="diagram-spine" aria-hidden="true"></div>
         <div class="diagram-list" id="diagramList"></div>
       </main>
+
+      <section class="artifact-panel" id="originalArtifact" aria-labelledby="artifactHeading">
+        <div class="artifact-panel__head">
+          <div>
+            <p class="eyebrow">Original Artifact</p>
+            <h2 class="artifact-panel__title" id="artifactHeading">
+              Meta L6 Product Sense — Complete Framework
+            </h2>
+          </div>
+
+          <div class="artifact-controls" aria-label="Artifact controls">
+            <a
+              class="artifact-action artifact-action--link"
+              href="https://claude.ai/public/artifacts/2224afc0-10d1-499a-8f13-a32e3326ea10"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open in Claude
+            </a>
+            <button class="artifact-action" id="toggleArtifactSourceButton" type="button">
+              Show source
+            </button>
+            <button class="artifact-action" id="copyArtifactSourceButton" type="button">
+              Copy source
+            </button>
+            <label class="artifact-zoom" for="artifactZoomRange">
+              <span>Zoom</span>
+              <input id="artifactZoomRange" type="range" min="55" max="140" value="100" />
+            </label>
+            <button class="artifact-action" id="resetArtifactZoomButton" type="button">
+              Reset zoom
+            </button>
+          </div>
+        </div>
+
+        <div class="artifact-stage">
+          <div class="artifact-viewport">
+            <div class="artifact-canvas" id="artifactCanvas">
+              <div class="artifact-render" id="artifactRender">
+                <p class="artifact-loading">Loading original artifact...</p>
+              </div>
+            </div>
+          </div>
+
+          <aside class="artifact-source is-hidden" id="artifactSourcePanel" aria-label="Artifact source">
+            <pre id="artifactSourcePre"></pre>
+          </aside>
+        </div>
+      </section>
     </div>
 
     <div class="navigation-map" id="navigationMap" data-open="false">
