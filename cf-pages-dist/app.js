@@ -760,6 +760,7 @@ const state = {
   navMapOpen: window.matchMedia("(min-width: 1280px)").matches
 };
 
+const originalArtifactSectionId = "originalArtifact";
 const diagramList = document.querySelector("#diagramList");
 const diagramShell = document.querySelector(".diagram-shell");
 const focusCard = document.querySelector("#focusCard");
@@ -817,7 +818,7 @@ function ensureToolkitOpen(stepId) {
 }
 
 function renderJumpStrip() {
-  jumpStrip.innerHTML = frameworkSteps
+  const stepButtons = frameworkSteps
     .map((step) => {
       const isActive = step.id === state.selectedId;
       return `
@@ -831,6 +832,12 @@ function renderJumpStrip() {
       `;
     })
     .join("");
+
+  jumpStrip.innerHTML = `${stepButtons}
+    <button class="jump-button" type="button" data-jump-target="${originalArtifactSectionId}">
+      Original artifact
+    </button>
+  `;
 }
 
 function renderNavigationMap() {
@@ -882,6 +889,13 @@ function renderNavigationMap() {
       </div>
 
       <div class="navigation-map__footer">
+        <button
+          class="navigation-map__action navigation-map__action--ghost"
+          type="button"
+          data-map-target="${originalArtifactSectionId}"
+        >
+          Original artifact
+        </button>
         <button class="navigation-map__action" type="button" data-map-top>Back to top</button>
       </div>
     </div>
@@ -1110,6 +1124,18 @@ function closeNavigationMapOnCompactViewport() {
   }
 }
 
+function jumpToTarget(targetId, { block = "start", closeMap = true } = {}) {
+  if (closeMap) {
+    closeNavigationMapOnCompactViewport();
+  }
+
+  pauseScrollSpy();
+
+  requestAnimationFrame(() => {
+    document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth", block });
+  });
+}
+
 function jumpToStep(stepId, { block = "center", closeMap = true } = {}) {
   state.selectedId = stepId;
   state.expanded.add(stepId);
@@ -1218,6 +1244,12 @@ document.addEventListener("click", (event) => {
     return;
   }
 
+  const mapTargetButton = event.target.closest("[data-map-target]");
+  if (mapTargetButton) {
+    jumpToTarget(mapTargetButton.dataset.mapTarget);
+    return;
+  }
+
   const toolkitButton = event.target.closest("[data-toolkit-key]");
   if (toolkitButton) {
     toggleToolkit(toolkitButton.dataset.toolkitKey);
@@ -1233,6 +1265,12 @@ document.addEventListener("click", (event) => {
   const jumpButton = event.target.closest("[data-jump-id]");
   if (jumpButton) {
     jumpToStep(jumpButton.dataset.jumpId);
+    return;
+  }
+
+  const jumpTargetButton = event.target.closest("[data-jump-target]");
+  if (jumpTargetButton) {
+    jumpToTarget(jumpTargetButton.dataset.jumpTarget);
   }
 });
 
