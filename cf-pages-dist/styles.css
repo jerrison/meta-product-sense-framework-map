@@ -748,7 +748,9 @@ textarea {
 }
 
 .navigation-map__panel {
-  margin-top: 0.7rem;
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 0.7rem);
   transform-origin: bottom right;
   transition: opacity 180ms ease, transform 180ms ease;
 }
