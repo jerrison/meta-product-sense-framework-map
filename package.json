@@ -1,0 +1,8 @@
+{
+  "name": "meta-product-sense-framework-map",
+  "private": true,
+  "scripts": {
+    "sync:pages": "cp index.html cf-pages-dist/index.html && cp styles.css cf-pages-dist/styles.css && cp app.js cf-pages-dist/app.js && cp favicon.ico cf-pages-dist/favicon.ico",
+    "deploy": "npm run sync:pages && npx wrangler pages deploy cf-pages-dist"
+  }
+}

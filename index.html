@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meta Product Sense Framework Map</title>
+    <meta
+      name="description"
+      content="An interactive study diagram built from the framework section of the Meta product sense battle card artifact."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2310233d'/%3E%3Cpath d='M17 46 28 18h8l11 28h-8l-2.3-6.2H27.3L25 46Zm12.8-12.7h4.5l-2.2-6.2Z' fill='%23f3ecdd'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero-card">
+        <div class="hero-copy">
+          <p class="eyebrow">Interactive Study Diagram</p>
+          <h1>Meta Product Sense Framework Map</h1>
+          <p class="hero-summary">
+            The framework path, timing, traps, and hand-offs from the artifact’s
+            framework tab, reorganized into a cleaner study surface.
+          </p>
+        </div>
+
+        <div class="hero-tools">
+          <div class="tool-cluster">
+            <button class="tool-button" id="openAllButton" type="button">Open all</button>
+            <button class="tool-button" id="collapseAllButton" type="button">Collapse all</button>
+            <button class="tool-button tool-button--accent" id="watchButton" type="button">
+              Review watch points
+            </button>
+            <button class="tool-button" id="resetButton" type="button">Reset flow</button>
+          </div>
+
+          <nav class="jump-strip" id="jumpStrip" aria-label="Jump to framework step"></nav>
+        </div>
+      </header>
+
+      <section class="overview-grid" aria-label="Framework overview">
+        <div class="briefing-card">
+          <p class="eyebrow">Clock Discipline</p>
+          <div class="clock-band" aria-hidden="true">
+            <span>0</span>
+            <span>20</span>
+            <span>30</span>
+            <span>35</span>
+            <span>40</span>
+          </div>
+          <div class="clock-rules">
+            <article>
+              <h2>20 min</h2>
+              <p>You should be entering solutions.</p>
+            </article>
+            <article>
+              <h2>30 min</h2>
+              <p>If you have not landed metrics, start now.</p>
+            </article>
+            <article>
+              <h2>35 min</h2>
+              <p>Summarize and close. Do not drift.</p>
+            </article>
+            <article class="hard-stop">
+              <h2>40 min</h2>
+              <p>Hard stop.</p>
+            </article>
+          </div>
+
+          <div class="mini-legend">
+            <span class="legend-pill legend-pill--strong">Strong</span>
+            <span class="legend-pill legend-pill--watch">Watch</span>
+            <span class="legend-pill legend-pill--neutral">Neutral</span>
+          </div>
+        </div>
+
+        <aside class="focus-card" id="focusCard" aria-live="polite"></aside>
+      </section>
+
+      <main class="diagram-shell" aria-label="Expandable framework diagram">
+        <div class="diagram-spine" aria-hidden="true"></div>
+        <div class="diagram-list" id="diagramList"></div>
+      </main>
+    </div>
+
+    <noscript>
+      <p class="no-script">This page needs JavaScript to render the interactive diagram.</p>
+    </noscript>
+  </body>
+</html>
