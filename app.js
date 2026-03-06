@@ -756,17 +756,27 @@ const frameworkSteps = [
 const state = {
   expanded: new Set(["clarify"]),
   toolkitExpanded: new Set(["clarify:goal-question"]),
-  selectedId: "clarify"
+  selectedId: "clarify",
+  navMapOpen: window.matchMedia("(min-width: 1280px)").matches
 };
 
 const diagramList = document.querySelector("#diagramList");
+const diagramShell = document.querySelector(".diagram-shell");
 const focusCard = document.querySelector("#focusCard");
 const jumpStrip = document.querySelector("#jumpStrip");
+const navigationMap = document.querySelector("#navigationMap");
+const navigationMapPanel = document.querySelector("#navigationMapPanel");
+const navigationMapToggle = document.querySelector("#navigationMapToggle");
+const navigationMapCurrent = document.querySelector("#navigationMapCurrent");
 
 const openAllButton = document.querySelector("#openAllButton");
 const collapseAllButton = document.querySelector("#collapseAllButton");
 const watchButton = document.querySelector("#watchButton");
 const resetButton = document.querySelector("#resetButton");
+const wideNavigationQuery = window.matchMedia("(min-width: 1280px)");
+
+let scrollSpyPauseUntil = 0;
+let scrollSyncFrame = null;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -821,6 +831,61 @@ function renderJumpStrip() {
       `;
     })
     .join("");
+}
+
+function renderNavigationMap() {
+  const currentStep = getStep(state.selectedId) ?? frameworkSteps[0];
+  const activeIndex = frameworkSteps.findIndex((step) => step.id === currentStep.id);
+
+  navigationMap.dataset.open = String(state.navMapOpen);
+  navigationMapToggle.setAttribute("aria-expanded", String(state.navMapOpen));
+  navigationMapCurrent.textContent = `${currentStep.step} ${currentStep.title}`;
+
+  navigationMapPanel.innerHTML = `
+    <div class="navigation-map__card">
+      <div class="navigation-map__header">
+        <div>
+          <p class="eyebrow">Navigation Map</p>
+          <h2 class="navigation-map__title">Jump anywhere</h2>
+          <p class="navigation-map__summary">
+            ${activeIndex + 1} of ${frameworkSteps.length} · ${escapeHtml(currentStep.title)}
+          </p>
+        </div>
+
+        <button class="navigation-map__action navigation-map__action--ghost" type="button" data-map-toggle>
+          Hide
+        </button>
+      </div>
+
+      <div class="navigation-map__list">
+        ${frameworkSteps
+          .map((step) => {
+            const isActive = step.id === state.selectedId;
+            return `
+              <button
+                class="navigation-map__step ${isActive ? "is-active" : ""}"
+                type="button"
+                data-map-id="${step.id}"
+                style="--accent:${step.accent};"
+                ${isActive ? 'aria-current="step"' : ""}
+              >
+                <span class="navigation-map__step-dot" aria-hidden="true"></span>
+                <span class="navigation-map__step-copy">
+                  <span class="navigation-map__step-meta">${escapeHtml(step.step)} · ${escapeHtml(step.cumulative)}</span>
+                  <span class="navigation-map__step-title">${escapeHtml(step.title)}</span>
+                </span>
+                <span class="navigation-map__step-index" aria-hidden="true">${escapeHtml(step.step)}</span>
+              </button>
+            `;
+          })
+          .join("")}
+      </div>
+
+      <div class="navigation-map__footer">
+        <button class="navigation-map__action" type="button" data-map-top>Back to top</button>
+      </div>
+    </div>
+  `;
 }
 
 function renderToolkitExplorer(step, location) {
@@ -1030,8 +1095,36 @@ function renderDiagram() {
 
 function render() {
   renderJumpStrip();
+  renderNavigationMap();
   renderFocusCard();
   renderDiagram();
+}
+
+function pauseScrollSpy(duration = 900) {
+  scrollSpyPauseUntil = Date.now() + duration;
+}
+
+function closeNavigationMapOnCompactViewport() {
+  if (!wideNavigationQuery.matches) {
+    state.navMapOpen = false;
+  }
+}
+
+function jumpToStep(stepId, { block = "center", closeMap = true } = {}) {
+  state.selectedId = stepId;
+  state.expanded.add(stepId);
+  ensureToolkitOpen(stepId);
+
+  if (closeMap) {
+    closeNavigationMapOnCompactViewport();
+  }
+
+  render();
+  pauseScrollSpy();
+
+  requestAnimationFrame(() => {
+    document.getElementById(stepId)?.scrollIntoView({ behavior: "smooth", block });
+  });
 }
 
 function selectStep(stepId) {
@@ -1083,21 +1176,48 @@ function reviewWatchPoints() {
   state.expanded = new Set(watchIds);
   state.selectedId = watchIds[0] ?? frameworkSteps[0].id;
   ensureToolkitOpen(state.selectedId);
+  closeNavigationMapOnCompactViewport();
   render();
-
-  const firstWatch = document.getElementById(state.selectedId);
-  firstWatch?.scrollIntoView({ behavior: "smooth", block: "center" });
+  pauseScrollSpy();
+  requestAnimationFrame(() => {
+    const firstWatch = document.getElementById(state.selectedId);
+    firstWatch?.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
 }
 
 function resetFlow() {
   state.expanded = new Set(["clarify"]);
   state.selectedId = "clarify";
   ensureToolkitOpen("clarify");
+  closeNavigationMapOnCompactViewport();
   render();
+  pauseScrollSpy();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 document.addEventListener("click", (event) => {
+  const mapToggleButton = event.target.closest("[data-map-toggle]");
+  if (mapToggleButton) {
+    state.navMapOpen = !state.navMapOpen;
+    render();
+    return;
+  }
+
+  const mapTopButton = event.target.closest("[data-map-top]");
+  if (mapTopButton) {
+    closeNavigationMapOnCompactViewport();
+    render();
+    pauseScrollSpy();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
+  const mapButton = event.target.closest("[data-map-id]");
+  if (mapButton) {
+    jumpToStep(mapButton.dataset.mapId, { block: "start" });
+    return;
+  }
+
   const toolkitButton = event.target.closest("[data-toolkit-key]");
   if (toolkitButton) {
     toggleToolkit(toolkitButton.dataset.toolkitKey);
@@ -1112,12 +1232,7 @@ document.addEventListener("click", (event) => {
 
   const jumpButton = event.target.closest("[data-jump-id]");
   if (jumpButton) {
-    const { jumpId } = jumpButton.dataset;
-    state.selectedId = jumpId;
-    state.expanded.add(jumpId);
-    ensureToolkitOpen(jumpId);
-    render();
-    document.getElementById(jumpId)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    jumpToStep(jumpButton.dataset.jumpId);
   }
 });
 
@@ -1132,15 +1247,13 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowDown") {
     event.preventDefault();
     const next = frameworkSteps[(activeIndex + 1) % frameworkSteps.length];
-    selectStep(next.id);
-    document.getElementById(next.id)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    jumpToStep(next.id);
   }
 
   if (event.key === "ArrowUp") {
     event.preventDefault();
     const previous = frameworkSteps[(activeIndex - 1 + frameworkSteps.length) % frameworkSteps.length];
-    selectStep(previous.id);
-    document.getElementById(previous.id)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    jumpToStep(previous.id);
   }
 
   if (event.key === "Enter" || event.key === " ") {
@@ -1162,7 +1275,70 @@ document.addEventListener("keydown", (event) => {
   if (event.key.toLowerCase() === "w") {
     reviewWatchPoints();
   }
+
+  if (event.key === "Escape" && state.navMapOpen) {
+    state.navMapOpen = false;
+    render();
+  }
 });
+
+function syncSelectedFromScroll() {
+  if (Date.now() < scrollSpyPauseUntil || !diagramShell) return;
+
+  const rows = [...document.querySelectorAll(".diagram-row")];
+  if (!rows.length) return;
+
+  let nextSelectedId = state.selectedId;
+
+  if (window.scrollY < diagramShell.offsetTop - window.innerHeight * 0.4) {
+    nextSelectedId = frameworkSteps[0].id;
+  } else {
+    const anchor = window.innerHeight * 0.3;
+    let smallestDistance = Number.POSITIVE_INFINITY;
+
+    rows.forEach((row) => {
+      const rect = row.getBoundingClientRect();
+      if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
+
+      const distance = Math.abs(rect.top - anchor);
+      if (distance < smallestDistance) {
+        smallestDistance = distance;
+        nextSelectedId = row.id;
+      }
+    });
+
+    if (smallestDistance === Number.POSITIVE_INFINITY) {
+      const lastRow = rows.at(-1);
+      if (lastRow?.getBoundingClientRect().top < anchor) {
+        nextSelectedId = lastRow.id;
+      } else {
+        nextSelectedId = rows[0].id;
+      }
+    }
+  }
+
+  if (nextSelectedId !== state.selectedId) {
+    state.selectedId = nextSelectedId;
+    ensureToolkitOpen(nextSelectedId);
+    render();
+  }
+}
+
+function requestScrollSync() {
+  if (scrollSyncFrame) return;
+
+  scrollSyncFrame = requestAnimationFrame(() => {
+    scrollSyncFrame = null;
+    syncSelectedFromScroll();
+  });
+}
+
+wideNavigationQuery.addEventListener("change", (event) => {
+  state.navMapOpen = event.matches;
+  render();
+});
+
+window.addEventListener("scroll", requestScrollSync, { passive: true });
 
 ensureToolkitOpen(state.selectedId);
 render();
