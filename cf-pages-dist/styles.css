@@ -920,7 +920,7 @@ textarea {
   .app-shell {
     width: min(calc(100% - 0.75rem), var(--max-width));
     padding-top: 0.75rem;
-    padding-bottom: 2.5rem;
+    padding-bottom: 5.75rem;
   }
 
   .hero-card,
@@ -1077,17 +1077,38 @@ textarea {
   }
 
   .navigation-map {
-    width: calc(100vw - 0.75rem);
+    width: auto;
     right: 0.375rem;
     bottom: 0.375rem;
   }
 
   .navigation-map__toggle {
-    padding: 0.85rem 0.9rem;
+    width: auto;
+    min-width: 0;
+    padding: 0.78rem 0.95rem;
+    border-radius: 999px;
+    gap: 0.12rem;
+  }
+
+  .navigation-map__toggle-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+  }
+
+  .navigation-map__toggle-current {
+    display: none;
+  }
+
+  .navigation-map__panel {
+    position: fixed;
+    left: 0.375rem;
+    right: 0.375rem;
+    bottom: 3.95rem;
+    margin-top: 0;
   }
 
   .navigation-map__card {
-    max-height: min(66vh, 30rem);
+    max-height: min(64vh, 31rem);
     padding: 0.9rem;
     border-radius: 1.35rem;
   }
@@ -1110,5 +1131,13 @@ textarea {
 
   .navigation-map__step-index {
     display: none;
+  }
+
+  .navigation-map__footer {
+    justify-content: stretch;
+  }
+
+  .navigation-map__footer .navigation-map__action {
+    width: 100%;
   }
 }
