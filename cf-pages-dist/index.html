@@ -92,6 +92,22 @@
       </main>
     </div>
 
+    <div class="navigation-map" id="navigationMap" data-open="false">
+      <button
+        class="navigation-map__toggle"
+        id="navigationMapToggle"
+        type="button"
+        data-map-toggle
+        aria-expanded="false"
+        aria-controls="navigationMapPanel"
+      >
+        <span class="navigation-map__toggle-label">Section Map</span>
+        <span class="navigation-map__toggle-current" id="navigationMapCurrent"></span>
+      </button>
+
+      <aside class="navigation-map__panel" id="navigationMapPanel" aria-label="Quick section navigation"></aside>
+    </div>
+
     <noscript>
       <p class="no-script">This page needs JavaScript to render the interactive diagram.</p>
     </noscript>
